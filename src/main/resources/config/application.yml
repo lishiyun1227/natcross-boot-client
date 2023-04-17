@@ -1,13 +1,13 @@
 logging:
   config: ${LOG_CONFIG_PATH:}
-  logdir: ${LOG_DIR:/logs}
-  console-level: debug
-  file-level: trace
+  logdir: ${LOG_DIR:logs}
+  console-level: info
+  file-level: info
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS}[%5p] --- [%-24t] [%-50C{50}][%-6L]: %m%n"
   level:
     root: info
-    person.pluto: ${LOG_LEVEL:trace}
+    person.pluto: ${LOG_LEVEL:info}
 spring:
   application:
     name: natcross-boot-client

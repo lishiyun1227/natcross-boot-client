@@ -15,6 +15,8 @@ import lombok.Data;
 @Data
 public class CommonClientConfig {
 
+	private String clientName;
+	
     /**
      * 服务端端口配置地址
      */

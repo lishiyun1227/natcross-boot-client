@@ -31,6 +31,7 @@ public class NatcrossClientTask {
     @Scheduled(fixedRate = 60000)
     public void go() {
         Map<String, String> param = new HashMap<>();
+        log.info(commonClientConfig.toString());
         SignTools.fullSignature(param, commonClientConfig.getHttpProjectSign());
         String doPost = HttpUtils
                 .doPost(commonClientConfig.getHttpServer() + "/natcross/projectSign/getAllListenServer", param, null);
@@ -54,25 +55,28 @@ public class NatcrossClientTask {
             Integer statusCode = listenStatus.getInteger("code");
             // 若不是停止状态
             if (!statusCode.equals(1)) {
-                Integer listenPort = listenPortObject.getInteger("listenPort");
-                String destIp = listenPortObject.getString("destIp");
-                Integer destPort = listenPortObject.getInteger("destPort");
-
-                hasListenPort.add(listenPort);
-
-                SecretInteractiveClientConfig config = new SecretInteractiveClientConfig();
-                config.setListenServerPort(listenPort);
-                config.setClientServiceIp(commonClientConfig.getClientServerIp());
-                config.setClientServicePort(commonClientConfig.getClientServerPort());
-                config.setDestIp(destIp);
-                config.setDestPort(destPort);
-                config.setBaseAesKey(commonClientConfig.getAeskey());
-                config.setTokenKey(commonClientConfig.getTokenKey());
-
-                ClientControlThread createNewClientThread = NatcrossClientControl.createNewClientThread(config);
-                if (createNewClientThread == null) {
-                    log.warn("创建客户端[{} <-> {}:{}]异常", listenPort, destIp, destPort);
-                }
+            	String portDescribe = listenPortObject.getString("portDescribe");
+            	if(portDescribe.contains(commonClientConfig.getClientName())) {
+            		Integer listenPort = listenPortObject.getInteger("listenPort");
+            		String destIp = listenPortObject.getString("destIp");
+            		Integer destPort = listenPortObject.getInteger("destPort");
+            		
+            		hasListenPort.add(listenPort);
+            		
+            		SecretInteractiveClientConfig config = new SecretInteractiveClientConfig();
+            		config.setListenServerPort(listenPort);
+            		config.setClientServiceIp(commonClientConfig.getClientServerIp());
+            		config.setClientServicePort(commonClientConfig.getClientServerPort());
+            		config.setDestIp(destIp);
+            		config.setDestPort(destPort);
+            		config.setBaseAesKey(commonClientConfig.getAeskey());
+            		config.setTokenKey(commonClientConfig.getTokenKey());
+            		
+            		ClientControlThread createNewClientThread = NatcrossClientControl.createNewClientThread(config);
+            		if (createNewClientThread == null) {
+            			log.warn("创建客户端[{} <-> {}:{}]异常", listenPort, destIp, destPort);
+            		}
+            	}
             }
         }
 

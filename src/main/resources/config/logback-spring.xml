@@ -2,15 +2,15 @@
 <configuration scan="true" scanPeriod="60 seconds"
 	debug="false">
 	<springProperty scope="context" name="appname" source="spring.application.name" />
-	<springProperty scope="context" name="logdir" source="logging.logdir" defaultvalue="/logs/person" />
+	<springProperty scope="context" name="logdir" source="logging.logdir" defaultvalue="logs" />
 
 	<!-- 日志记录器级别 -->
-	<springProperty scope="context" name="consoleLevel" source="logging.console-level" defaultvalue="trace"/>
-	<springProperty scope="context" name="fileLevel" source="logging.file-level" defaultvalue="trace"/>
+	<springProperty scope="context" name="consoleLevel" source="logging.console-level" defaultvalue="info"/>
+	<springProperty scope="context" name="fileLevel" source="logging.file-level" defaultvalue="info"/>
 	
 	<!-- 分包级别 -->
 	<springProperty scope="context" name="root" source="logging.level.root" value="info"/>
-	<springProperty scope="context" name="person.pluto" source="logging.level.person.pluto" value="trace"/>
+	<springProperty scope="context" name="person.pluto" source="logging.level.person.pluto" value="info"/>
 
 	<contextName>${appname}</contextName>
 
